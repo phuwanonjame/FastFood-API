@@ -24,6 +24,32 @@ const router = Router();
  *     responses:
  *       200:
  *         description: List of organizations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   org_id:
+ *                     type: string
+ *                     example: "org-001"
+ *                   name:
+ *                     type: string
+ *                     example: "Samart Group"
+ *                   type_id:
+ *                     type: integer
+ *                     example: 1
+ *                   plan_id:
+ *                     type: integer
+ *                     example: 1
+ *                   user_id:
+ *                     type: string
+ *                     example: "user-123"
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-09-11T10:00:00Z"
  */
 router.get("/", getOrganizationsController);
 
@@ -42,7 +68,7 @@ router.get("/", getOrganizationsController);
  *             properties:
  *               name:
  *                 type: string
- *                 example: Samart Group
+ *                 example: "Samart Group"
  *               type_id:
  *                 type: integer
  *                 example: 1
@@ -59,7 +85,7 @@ router.get("/", getOrganizationsController);
  *               - user_id
  *     responses:
  *       201:
- *         description: Created organization
+ *         description: Organization created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -71,21 +97,27 @@ router.get("/", getOrganizationsController);
  *                 data:
  *                   type: object
  *                   properties:
- *                     id:
+ *                     org_id:
  *                       type: string
  *                       example: "org-456"
  *                     name:
  *                       type: string
- *                       example: Samart Group
- *                     type:
- *                       type: object
- *                     plan:
- *                       type: object
+ *                       example: "Samart Group"
+ *                     type_id:
+ *                       type: integer
+ *                       example: 1
+ *                     plan_id:
+ *                       type: integer
+ *                       example: 1
  *                     user_id:
  *                       type: string
  *                       example: "user-123"
+ *                     created_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-09-11T10:00:00Z"
  *       400:
- *         description: Missing user_id or invalid input
+ *         description: Missing required fields or invalid input
  *       500:
  *         description: Internal server error
  */
@@ -93,7 +125,7 @@ router.post("/", createOrganizationController);
 
 /**
  * @swagger
- * /organizations/{userId}:
+ * /organizations/user/{userId}:
  *   get:
  *     summary: Get organizations by User ID
  *     tags: [Organizations]
@@ -106,17 +138,43 @@ router.post("/", createOrganizationController);
  *         description: User ID
  *     responses:
  *       200:
- *         description: List of organizations
+ *         description: List of organizations for the user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   org_id:
+ *                     type: string
+ *                     example: "org-001"
+ *                   name:
+ *                     type: string
+ *                     example: "Samart Group"
+ *                   type_id:
+ *                     type: integer
+ *                     example: 1
+ *                   plan_id:
+ *                     type: integer
+ *                     example: 1
+ *                   user_id:
+ *                     type: string
+ *                     example: "user-123"
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-09-11T10:00:00Z"
  *       404:
  *         description: Organizations not found
  */
-router.get("/:id", getOrganizationsByUserIdController);
+router.get("/user/:userId", getOrganizationsByUserIdController);
 
 /**
  * @swagger
  * /organizations/{id}:
  *   delete:
- *     summary: Delete organization by ID (only for the user)
+ *     summary: Delete organization by ID (only by the owner)
  *     tags: [Organizations]
  *     parameters:
  *       - in: path
@@ -136,15 +194,25 @@ router.get("/:id", getOrganizationsByUserIdController);
  *               userId:
  *                 type: string
  *                 description: ID of the user deleting the organization
+ *                 example: "user-123"
  *     responses:
  *       200:
  *         description: Organization deleted successfully
- *       404:
- *         description: Organization not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Organization deleted successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/OrganizationResponse'
  *       400:
  *         description: org_id and user_id are required
+ *       404:
+ *         description: Organization not found
  */
 router.delete("/:id", delOrganizationByIdController);
-
 
 export default router;
