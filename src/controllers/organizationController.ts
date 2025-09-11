@@ -30,10 +30,10 @@ export const getOrganizationsController = async (_req: Request, res: Response) =
 // Controller
 export const getOrganizationsByUserIdController = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params; 
-    if (!userId) return res.status(400).json({ error: "userId is required" });
+   const { id } = req.params; // id = user_id
+if (!id) return res.status(400).json({ error: "userId is required" });
 
-    const orgs = await organizationService.getOrganizationsByUserId(userId);
+    const orgs = await organizationService.getOrganizationsByUserId(id);
 
     if (!orgs || orgs.length === 0) {
       return res.status(404).json({ error: "No organizations found for this user" });
