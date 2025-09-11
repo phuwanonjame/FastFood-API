@@ -49,7 +49,8 @@ export const delOrganizationByIdController = async (req: Request, res: Response)
   try {
     const { id } = req.params;       // org_id
     const { userId } = req.body;     // user_id จาก request body หรือ header
-
+    console.log(userId);
+    
     if (!id || !userId) {
       return res.status(400).json({ error: "org_id and user_id are required" });
     }
