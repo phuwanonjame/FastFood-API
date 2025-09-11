@@ -1,12 +1,16 @@
+
+  generator client {
+    provider: prisma-client-js
+    binaryTargets: native, debian-openssl-3.0.x
+  }
+  
+
 /*
-  ตัวอย่าง generator client
-  provider: prisma-client-js
-  binaryTargets: native, debian-openssl-3.0.x
-*/
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
+*/
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
