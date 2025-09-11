@@ -5,6 +5,16 @@ import { OrganizationDTO, DeleteOrganizationResponse } from "../models/organizat
 
 export const createOrganizationController = async (req: Request, res: Response) => {
   try {
+
+   const ordered = {
+    user_id: req.body.user_id,
+    name: req.body.name,
+    type_id: req.body.type_id,
+    plan_id: req.body.plan_id,
+  };
+
+  console.log(JSON.stringify(ordered, null, 2));
+    
     const data: OrganizationDTO = req.body;
 
     if (!data.user_id) {
