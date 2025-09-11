@@ -19,7 +19,7 @@ export const getOrganizations = async () => {
 export const getOrganizationsByUserId = async (userId: string) => {
   return await prisma.organizations.findMany({
     where: { user_id: userId }, // ใช้ user_id แทน org_id
-    include: { type: true, plan: true }, // ดึง relation ด้วย
+    include: { type: true, plan: true },
   });
 };
 
