@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   createOrganizationController,
   getOrganizationsController,
-  getOrganizationByIdController,
+  getOrganizationsByUserIdController,
   delOrganizationByIdController,
 } from "../controllers/organizationController";
 
@@ -93,24 +93,24 @@ router.post("/", createOrganizationController);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /organizations/{userId}:
  *   get:
- *     summary: Get organization by ID
+ *     summary: Get organizations by User ID
  *     tags: [Organizations]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: userId
  *         schema:
  *           type: string
  *         required: true
- *         description: Organization ID
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Organization data
+ *         description: List of organizations
  *       404:
- *         description: Organization not found
+ *         description: Organizations not found
  */
-router.get("/:id", getOrganizationByIdController);
+router.get("/:id", getOrganizationsByUserIdController);
 
 /**
  * @swagger
