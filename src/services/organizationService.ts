@@ -24,8 +24,23 @@ export const getOrganizationsByUserId = async (userId: string) => {
 };
 
 
-export const deleteOrganizationById = async (id: string) => {
-  return await prisma.organizations.delete({
-    where: { org_id: id },
+export const deleteOrganizationById = async (orgId: string, userId: string) => {
+  // ดึงข้อมูลก่อนลบ
+  const org = await prisma.organizations.findFirst({
+    where: { org_id: orgId, user_id: userId },
+    select: { org_id: true, name: true, type_id: true, plan_id: true, created_at: true }
   });
+
+  if (!org) {
+    const error: any = new Error("Organization not found");
+    error.code = "P2025";
+    throw error;
+  }
+
+  // ลบ org
+  await prisma.organizations.delete({
+    where: { org_id: orgId }
+  });
+
+  return org; // คืนค่าแบบ OrganizationResponse
 };

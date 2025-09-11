@@ -30,7 +30,7 @@ export const getOrganizationsController = async (_req: Request, res: Response) =
 // Controller
 export const getOrganizationsByUserIdController = async (req: Request, res: Response) => {
   try {
-   const { id } = req.params; // id = user_id
+   const { id } = req.params; 
 if (!id) return res.status(400).json({ error: "userId is required" });
 
     const orgs = await organizationService.getOrganizationsByUserId(id);
@@ -47,8 +47,14 @@ if (!id) return res.status(400).json({ error: "userId is required" });
 
 export const delOrganizationByIdController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const org = await organizationService.deleteOrganizationById(id);
+    const { id } = req.params;       // org_id
+    const { userId } = req.body;     // user_id จาก request body หรือ header
+
+    if (!id || !userId) {
+      return res.status(400).json({ error: "org_id and user_id are required" });
+    }
+
+    const org = await organizationService.deleteOrganizationById(id, userId);
 
     const response: DeleteOrganizationResponse = {
       message: "Organization deleted successfully",

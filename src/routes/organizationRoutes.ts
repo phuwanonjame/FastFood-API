@@ -116,7 +116,7 @@ router.get("/:id", getOrganizationsByUserIdController);
  * @swagger
  * /organizations/{id}:
  *   delete:
- *     summary: Delete organization by ID
+ *     summary: Delete organization by ID (only for the user)
  *     tags: [Organizations]
  *     parameters:
  *       - in: path
@@ -125,12 +125,26 @@ router.get("/:id", getOrganizationsByUserIdController);
  *           type: string
  *         required: true
  *         description: Organization ID
+ *     requestBody:
+ *       description: User ID performing the deletion
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: ID of the user deleting the organization
  *     responses:
  *       200:
  *         description: Organization deleted successfully
  *       404:
  *         description: Organization not found
+ *       400:
+ *         description: org_id and user_id are required
  */
 router.delete("/:id", delOrganizationByIdController);
+
 
 export default router;
