@@ -106,11 +106,38 @@ router.post("/", createOrganizationController);
  *         description: User ID
  *     responses:
  *       200:
- *         description: List of organizations
+ *         description: Organizations found with count
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 org_count:
+ *                   type: integer
+ *                   description: Number of organizations
+ *                 organizations:
+ *                   type: array
+ *                   description: List of organizations
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       name:
+ *                         type: string
+ *                       type:
+ *                         type: object
+ *                       plan:
+ *                         type: object
  *       404:
- *         description: Organizations not found
+ *         description: Organizations not found for this user
+ *       400:
+ *         description: userId is required
+ *       500:
+ *         description: Failed to fetch organizations
  */
 router.get("/:id", getOrganizationsByUserIdController);
+
 
 /**
  * @swagger
