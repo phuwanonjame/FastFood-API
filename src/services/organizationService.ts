@@ -25,10 +25,11 @@ export const getOrganizationsByUserId = async (userId: string) => {
   // จำลอง project_count = 0
   const organizationsWithProjectCount = organizations.map((org) => ({
     ...org,
-    project_count: 0, // ตั้งค่าเริ่มต้นเป็น 0
+
   }));
 
   return {
+    projrct_count: 0,
     org_count: organizations.length,               // จำนวนองค์กร
     organizations: organizationsWithProjectCount, // รายละเอียดองค์กร + project_count
   };
