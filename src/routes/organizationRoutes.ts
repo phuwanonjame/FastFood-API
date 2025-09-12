@@ -129,6 +129,9 @@ router.post("/", createOrganizationController);
  *                         type: object
  *                       plan:
  *                         type: object
+ *                       project_count:      # <-- เพิ่มตรงนี้
+ *                         type: integer
+ *                         description: Number of projects (currently mocked as 0)
  *       404:
  *         description: Organizations not found for this user
  *       400:

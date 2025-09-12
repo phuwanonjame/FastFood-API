@@ -22,11 +22,18 @@ export const getOrganizationsByUserId = async (userId: string) => {
     include: { type: true, plan: true },
   });
 
+  // จำลอง project_count = 0
+  const organizationsWithProjectCount = organizations.map((org) => ({
+    ...org,
+    project_count: 0, // ตั้งค่าเริ่มต้นเป็น 0
+  }));
+
   return {
-    org_count: organizations.length, // จำนวนองค์กร
-    organizations,                  // รายละเอียดองค์กร
+    org_count: organizations.length,               // จำนวนองค์กร
+    organizations: organizationsWithProjectCount, // รายละเอียดองค์กร + project_count
   };
 };
+
 
 
 export const deleteOrganizationById = async (orgId: string, userId: string) => {
