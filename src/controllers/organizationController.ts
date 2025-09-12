@@ -40,16 +40,18 @@ export const getOrganizationsController = async (_req: Request, res: Response) =
 // Controller
 export const getOrganizationsByUserIdController = async (req: Request, res: Response) => {
   try {
-   const { id } = req.params; 
-if (!id) return res.status(400).json({ error: "userId is required" });
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ error: "userId is required" });
 
-    const orgs = await organizationService.getOrganizationsByUserId(id);
+    const orgData = await organizationService.getOrganizationsByUserId(id);
 
-    if (!orgs || orgs.length === 0) {
+    // ตรวจสอบข้อมูล
+    if (!orgData || orgData.org_count === 0) {
       return res.status(404).json({ error: "No organizations found for this user" });
     }
 
-    res.json(orgs);
+    // คืนค่าเป็น object พร้อม org_count
+    res.json(orgData);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch organizations", details: error });
   }

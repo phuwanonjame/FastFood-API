@@ -17,10 +17,15 @@ export const getOrganizations = async () => {
 };
 
 export const getOrganizationsByUserId = async (userId: string) => {
-  return await prisma.organizations.findMany({
-    where: { user_id: userId }, // ใช้ user_id แทน org_id
+  const organizations = await prisma.organizations.findMany({
+    where: { user_id: userId },
     include: { type: true, plan: true },
   });
+
+  return {
+    org_count: organizations.length, // จำนวนองค์กร
+    organizations,                  // รายละเอียดองค์กร
+  };
 };
 
 
