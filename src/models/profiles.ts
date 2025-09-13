@@ -5,6 +5,7 @@ export interface ProfileDTO {
   phone?: string;
   email?: string;
   address?: string;
-  lat?: number;   // ✅ เพิ่ม
-  lng?: number;   // ✅ เพิ่ม
+  lat?: number;   // ✅ Latitude
+  lng?: number;   // ✅ Longitude
+  pin?: string;   // ✅ เพิ่ม PIN สำหรับล็อค login
 }

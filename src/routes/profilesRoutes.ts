@@ -91,6 +91,10 @@ router.get("/:id", ProfilesController.getProfileById);
  *                 format: float
  *                 description: Longitude
  *                 example: 100.5018
+ *               pin:
+ *                 type: string
+ *                 description: PIN for login lock
+ *                 example: "1234"
  *     responses:
  *       201:
  *         description: Profile created successfully
@@ -150,6 +154,10 @@ router.post("/", ProfilesController.createProfile);
  *                 format: float
  *                 description: Longitude
  *                 example: 100.5018
+ *               pin:
+ *                 type: string
+ *                 description: PIN for login lock
+ *                 example: "1234"
  *     responses:
  *       200:
  *         description: Profile updated successfully

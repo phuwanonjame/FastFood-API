@@ -7,8 +7,12 @@ export const createProfileSchema = yup.object().shape({
   phone: yup.string().nullable(),
   email: yup.string().email().nullable(),
   address: yup.string().nullable(),
-  lat: yup.number().nullable(),   // ✅ ต้องเพิ่ม
-  lng: yup.number().nullable(),   // ✅ ต้องเพิ่ม
+  lat: yup.number().nullable(),   
+  lng: yup.number().nullable(),
+  pin: yup.string()
+    .min(4, "PIN ต้องมีอย่างน้อย 4 หลัก")
+    .max(6, "PIN ต้องไม่เกิน 6 หลัก")
+    .nullable(),   // ✅ เพิ่มฟิลด์ pin
 });
 
 
