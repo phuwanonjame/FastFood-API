@@ -36,10 +36,21 @@ export const updateProfile = async (profile_id: string, data: Partial<ProfileDTO
   });
 };
 
-export const deleteProfile = async (profile_id: string) => {
-  const profile = await prisma.profiles.findUnique({ where: { profile_id } });
-  if (!profile) throw new Error("Profile not found");
+export const deleteProfile = async (profile_id: string, org_id: string) => {
+  // หา profile ที่ตรงกับ profile_id และ org_id
+  const profile = await prisma.profiles.findFirst({
+    where: {
+      profile_id,
+      org_id,
+    },
+  });
 
-  await prisma.profiles.delete({ where: { profile_id } });
+  if (!profile) throw new Error("Profile not found or does not belong to the organization");
+
+  // ลบ profile
+  await prisma.profiles.delete({
+    where: { profile_id },
+  });
+
   return profile;
 };

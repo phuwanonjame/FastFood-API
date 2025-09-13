@@ -5,4 +5,6 @@ export interface ProfileDTO {
   phone?: string;
   email?: string;
   address?: string;
+  lat?: number;   // ✅ เพิ่ม
+  lng?: number;   // ✅ เพิ่ม
 }

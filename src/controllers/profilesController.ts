@@ -60,9 +60,19 @@ export const updateProfile = async (req: Request, res: Response) => {
 
 export const deleteProfile = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    await ProfileService.deleteProfile(id);
-    res.json({ message: 'Profile deleted successfully' });
+    const { id } = req.params;        // profile_id
+    const { org_id } = req.body;      // รับ org_id จาก body
+
+    if (!org_id) {
+      return res.status(400).json({ error: "org_id is required in request body" });
+    }
+
+    const deletedProfile = await ProfileService.deleteProfile(id, org_id);
+
+    res.json({
+      message: 'Profile deleted successfully',
+      profile: deletedProfile
+    });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

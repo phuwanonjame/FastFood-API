@@ -81,6 +81,16 @@ router.get("/:id", ProfilesController.getProfileById);
  *                 type: string
  *                 description: Full address
  *                 example: "123/45 Ladprao Rd, Bangkok"
+ *               lat:
+ *                 type: number
+ *                 format: float
+ *                 description: Latitude
+ *                 example: 13.7563
+ *               lng:
+ *                 type: number
+ *                 format: float
+ *                 description: Longitude
+ *                 example: 100.5018
  *     responses:
  *       201:
  *         description: Profile created successfully
@@ -130,6 +140,16 @@ router.post("/", ProfilesController.createProfile);
  *                 type: string
  *                 description: Full address
  *                 example: "123/45 Ladprao Rd, Bangkok"
+ *               lat:
+ *                 type: number
+ *                 format: float
+ *                 description: Latitude
+ *                 example: 13.7563
+ *               lng:
+ *                 type: number
+ *                 format: float
+ *                 description: Longitude
+ *                 example: 100.5018
  *     responses:
  *       200:
  *         description: Profile updated successfully
@@ -140,7 +160,7 @@ router.put("/:id", ProfilesController.updateProfile);
  * @swagger
  * /profiles/{id}:
  *   delete:
- *     summary: Delete a profile
+ *     summary: Delete a profile (must provide org_id in body)
  *     tags: [Profiles]
  *     parameters:
  *       - in: path
@@ -148,10 +168,29 @@ router.put("/:id", ProfilesController.updateProfile);
  *         required: true
  *         schema:
  *           type: string
+ *         description: Profile ID to delete
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - org_id
+ *             properties:
+ *               org_id:
+ *                 type: string
+ *                 description: Organization ID of the profile
+ *                 example: "550e8400-e29b-41d4-a716-446655440000"
  *     responses:
  *       200:
  *         description: Profile deleted successfully
+ *       400:
+ *         description: org_id is missing or invalid
+ *       404:
+ *         description: Profile not found
  */
 router.delete("/:id", ProfilesController.deleteProfile);
+
 
 export default router;
