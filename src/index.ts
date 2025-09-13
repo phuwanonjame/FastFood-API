@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import healthRoutes from "./routes/healthRoutes";
 import organizationRoutes from "./routes/organizationRoutes";
+import ProfilesRoutes from "./routes/profilesRoutes"
 import { setupSwagger } from "./swagger";
 import { notFound } from "./middlewares/notFound";
 import { errorHandler } from "./middlewares/errorHandler";
@@ -22,6 +23,7 @@ const API_PREFIX = "/api/v1";
 
 
 app.use(`${API_PREFIX}/organizations`, organizationRoutes);
+app.use(`${API_PREFIX}/profiles`, ProfilesRoutes);
 app.use(`${API_PREFIX}/health`, healthRoutes);
 
 
