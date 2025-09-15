@@ -17,24 +17,37 @@ export const getOrganizations = async () => {
 };
 
 export const getOrganizationsByUserId = async (userId: string) => {
+  // ดึง organizations ของ user
   const organizations = await prisma.organizations.findMany({
     where: { user_id: userId },
     include: { type: true, plan: true },
   });
 
-  // จำลอง project_count = 0
-  const organizationsWithProjectCount = organizations.map((org) => ({
-    ...org,
+  // map organizations เพื่อเพิ่ม project info
+  const organizationsWithProjectCount = await Promise.all(
+    organizations.map(async (org) => {
+      // ดึง project ของ org
+      const projects = await prisma.projects.findMany({
+        where: { org_id: org.org_id },
+        select: {
+          projects_id: true,
+          projects_name: true,
+        },
+      });
 
-  }));
+      return {
+        ...org,
+        project_count: projects.length,
+        projects: projects, // list ของ project
+      };
+    })
+  );
 
   return {
-    projrct_count: 0,
     org_count: organizations.length,               // จำนวนองค์กร
-    organizations: organizationsWithProjectCount, // รายละเอียดองค์กร + project_count
+    organizations: organizationsWithProjectCount, // รายละเอียดองค์กร + project info
   };
 };
-
 
 
 export const deleteOrganizationById = async (orgId: string, userId: string) => {

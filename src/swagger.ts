@@ -12,8 +12,8 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: "https://fastfood-api-ifn3.onrender.com/api/v1",
-        // url: "http://localhost:3000/api/v1",
+        // url: "https://fastfood-api-ifn3.onrender.com/api/v1",
+        url: "http://localhost:3000/api/v1",
       },
     ],
   },
