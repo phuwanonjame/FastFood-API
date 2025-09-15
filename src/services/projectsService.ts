@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ProjectDTO } from "../models/profiles";   // ✅ เปลี่ยนชื่อ model/dto ด้วย
+import { ProjectDTO } from "../models/profiles"; // ✅ ใช้ ProjectDTO ใหม่
 
 const prisma = new PrismaClient();
 
@@ -11,7 +11,7 @@ export const createProject = async (data: ProjectDTO) => {
   if (!org) throw new Error("Organization not found");
 
   // สร้าง project
-  return await prisma.projects.create({ data });   // ✅ เปลี่ยน profiles → projects
+  return await prisma.projects.create({ data });
 };
 
 export const getAllProjects = async () => {
@@ -21,9 +21,11 @@ export const getAllProjects = async () => {
 };
 
 export const getProjectById = async (projects_id: string) => {
-  return await prisma.projects.findUnique({
-    where: { projects_id },   // ✅ profile_id → project_id
+  const project = await prisma.projects.findUnique({
+    where: { projects_id },
   });
+  if (!project) throw new Error("Project not found");
+  return project;
 };
 
 export const updateProject = async (projects_id: string, data: Partial<ProjectDTO>) => {
@@ -47,10 +49,9 @@ export const deleteProject = async (projects_id: string, org_id: string) => {
 
   if (!project) throw new Error("Project not found or does not belong to the organization");
 
-  // ตรวจสอบ user_id ว่ามีไหม (แค่เช็ค ไม่แก้ค่า)
+  // ตรวจสอบ user_id (แค่ log)
   if (project.user_id) {
     console.log(`Project has a user assigned: ${project.user_id}`);
-    // ถ้าต้องการสามารถทำ logic อื่นต่อได้ เช่น ยกเลิกการลบ หรือส่ง warning
   }
 
   // ลบ project
