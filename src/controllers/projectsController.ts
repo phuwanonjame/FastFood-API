@@ -10,7 +10,6 @@ const validateYup = async (schema: any, data: any) => {
   }
 };
 
-// ✅ ดึง project ทั้งหมด
 export const getProjects = async (req: Request, res: Response) => {
   try {
     const projects = await ProjectService.getAllProjects();
@@ -20,7 +19,7 @@ export const getProjects = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ ดึง project ตาม id
+
 export const getProjectById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -32,7 +31,7 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ สร้าง project
+
 export const createProject = async (req: Request, res: Response) => {
   try {
     console.log(req.body);
@@ -48,7 +47,7 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ อัปเดต project
+
 export const updateProject = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -64,7 +63,7 @@ export const updateProject = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ ลบ project
+
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;        // project_id
