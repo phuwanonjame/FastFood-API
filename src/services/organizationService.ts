@@ -70,3 +70,29 @@ export const deleteOrganizationById = async (orgId: string, userId: string) => {
 
   return org; // คืนค่าแบบ OrganizationResponse
 };
+
+export const getOrganizationsByOrgId = async (orgId: string, userId: string) => {
+  // ดึงข้อมูล organization ตาม orgId + userId
+  const organization = await prisma.organizations.findFirst({
+    where: { org_id: orgId, user_id: userId },   // ✅ ตรวจสอบว่า org เป็นของ user ด้วย
+    include: { type: true, plan: true },
+  });
+
+  if (!organization) return null;
+
+  // ดึง project ของ org นั้น
+  const projects = await prisma.projects.findMany({
+    where: { org_id: orgId },
+    select: {
+      projects_id: true,
+      projects_name: true,
+    },
+  });
+
+  // คืนค่า org พร้อม projects และ count
+  return {
+    ...organization,
+    project_count: projects.length,
+    projects,
+  };
+};

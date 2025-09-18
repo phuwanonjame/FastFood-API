@@ -3,7 +3,8 @@ import {
   createOrganizationController,
   getOrganizationsController,
   getOrganizationsByUserIdController,
-  delOrganizationByIdController,
+   getOrganizationsByOrgIdController,
+   delOrganizationByIdController
 } from "../controllers/organizationController";
 
 const router = Router();
@@ -140,6 +141,36 @@ router.post("/", createOrganizationController);
  *         description: Failed to fetch organizations
  */
 router.get("/:id", getOrganizationsByUserIdController);
+/**
+ * @swagger
+ * /organizations/org/{orgId}:
+ *   get:
+ *     summary: Get organization by Org ID
+ *     tags: [Organizations]
+ *     parameters:
+ *       - in: path
+ *         name: orgId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Organization ID
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID of the owner
+ *     responses:
+ *       200:
+ *         description: Organization details with project info
+ *       404:
+ *         description: Organization not found
+ *       400:
+ *         description: orgId and userId are required
+ *       500:
+ *         description: Failed to fetch organization
+ */
+router.get("/org/:orgId", getOrganizationsByOrgIdController);
 
 
 /**

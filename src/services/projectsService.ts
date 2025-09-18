@@ -54,7 +54,7 @@ export const deleteProject = async (projects_id: string, org_id: string) => {
     console.log(`Project has a user assigned: ${project.user_id}`);
   }
 
-  // ลบ project
+  
   await prisma.projects.delete({
     where: { projects_id },
   });

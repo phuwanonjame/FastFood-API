@@ -56,7 +56,26 @@ export const getOrganizationsByUserIdController = async (req: Request, res: Resp
     res.status(500).json({ error: "Failed to fetch organizations", details: error });
   }
 };
+export const getOrganizationsByOrgIdController = async (req: Request, res: Response) => {
+  try {
+    const { orgId } = req.params;
+    const { userId } = req.query; // ✅ รับ userId จาก query param
 
+    if (!orgId || !userId) {
+      return res.status(400).json({ error: "orgId and userId are required" });
+    }
+
+    const orgData = await organizationService.getOrganizationsByOrgId(orgId, String(userId)); // ✅ ส่ง userId ด้วย
+
+    if (!orgData) {
+      return res.status(404).json({ error: "Organization not found for this user" });
+    }
+
+    res.json(orgData);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch organization", details: error });
+  }
+};
 export const delOrganizationByIdController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;       // org_id
